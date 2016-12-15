@@ -2,4 +2,5 @@
 .dockerignore
 README.md
 LICENSE.md
+.idea
 vpn.env.example

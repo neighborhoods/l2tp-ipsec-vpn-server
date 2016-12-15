@@ -1,17 +1,14 @@
 # IPsec VPN Server on Docker
 
-[![Docker Stars](https://img.shields.io/docker/stars/fcojean/l2tp-ipsec-vpn-server.svg)](https://hub.docker.com/r/fcojean/l2tp-ipsec-vpn-server) 
-[![Docker Pulls](https://img.shields.io/docker/pulls/fcojean/l2tp-ipsec-vpn-server.svg)](https://hub.docker.com/r/fcojean/l2tp-ipsec-vpn-server)
-
 Docker image to run an IPsec VPN server, with support for both `IPsec/L2TP` and `IPsec/XAuth ("Cisco IPsec")`.
 
 Based on Debian Jessie with [Libreswan](https://libreswan.org) (IPsec VPN software) and [xl2tpd](https://github.com/xelerance/xl2tpd) (L2TP daemon).
 
-This docker image is based on [Lin Song work](https://github.com/hwdsl2/docker-ipsec-vpn-server) and adds those features:
+This docker image is based on [François COJEAN work](https://github.com/fcojean/l2tp-ipsec-vpn-server) with the following changes:
 
-* Multiple VPN users declaration support
-* Native NAT Transversal support
-* No waiting time before a user can reconnect in case of disconnection support
+* Credentials are no longer printed to system output/logs
+* Libreswan updated to 3.18 to address vulnerability from 3.17
+* Removed .env file as this is intended to run on Amazon ECS, which does not support env files
 
 ## Install Docker
 
@@ -19,25 +16,25 @@ Follow [these instructions](https://docs.docker.com/engine/installation/) to get
 
 ## Download
 
-Get the trusted build from the [Docker Hub registry](https://hub.docker.com/r/fcojean/l2tp-ipsec-vpn-server):
+Get the trusted build from the [Docker Hub registry](https://hub.docker.com/r/neighborhoods/l2tp-ipsec-vpn-server/):
 
 ```
-docker pull fcojean/l2tp-ipsec-vpn-server
+docker pull neighborhoods/l2tp-ipsec-vpn-server
 ```
 
 or download and compile the source yourself from GitHub:
 
 ```
-git clone https://github.com/fcojean/l2tp-ipsec-vpn-server.git
+git clone https://github.com/neighborhoods/l2tp-ipsec-vpn-server.git
 cd l2tp-ipsec-vpn-server
-docker build -t fcojean/l2tp-ipsec-vpn-server .
+docker build -t neighborhoods/l2tp-ipsec-vpn-server .
 ```
 
 ## How to use this image
 
 ### Environment variables
 
-This Docker image uses the following two environment variables, that can be declared in an `env` file (see vpn.env.example file):
+This Docker image uses the following two environment variables:
 
 ```
 VPN_IPSEC_PSK=<IPsec pre-shared key>
@@ -70,7 +67,7 @@ docker run \
     -p 4500:4500/udp \
     -v /lib/modules:/lib/modules:ro \
     -d --privileged \
-    fcojean/l2tp-ipsec-vpn-server
+    neighborhoods/l2tp-ipsec-vpn-server
 ```
 
 ### Retrieve VPN login details
@@ -128,10 +125,11 @@ The ports that are exposed for this container to work are:
 
 ## Author
 
-Copyright (C) 2016 François COJEAN
+Copyright (C) 2016 Neighborhoods.com, LLC
 
 ## License
 
+Based on [the work of François COJEAN](https://github.com/fcojean/l2tp-ipsec-vpn-server) (Copyright 2016)
 Based on [the work of Lin Song](https://github.com/hwdsl2/docker-ipsec-vpn-server) (Copyright 2016)   
 Based on [the work of Thomas Sarlandie](https://github.com/sarfata/voodooprivacy) (Copyright 2012)
 

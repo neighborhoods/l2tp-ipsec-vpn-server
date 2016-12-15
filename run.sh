@@ -217,36 +217,6 @@ sysctl -q -p 2>/dev/null
 # Update file attributes
 chmod 600 /etc/ipsec.secrets /etc/ppp/chap-secrets /etc/ipsec.d/passwd
 
-cat <<EOF
-
-================================================
-
-IPsec VPN server is now ready for use!
-
-Connect to your new VPN with these details:
-
-Server IP: $PUBLIC_IP
-IPsec PSK: $VPN_IPSEC_PSK
-Users credentials :
-EOF
-
-for (( i=0; i<=$CREDENTIALS_NUMBER - 1; i++ ))
-do
-	VPN_USER_LOGIN=`echo "$VPN_USER_CREDENTIAL_LIST" | jq -r ".["$i"] | .login"`
-	VPN_USER_PASSWORD=`echo "$VPN_USER_CREDENTIAL_LIST" | jq -r ".["$i"] | .password"`
-	echo "Login : ${VPN_USER_LOGIN} Password : ${VPN_USER_PASSWORD}"
-done
-
-cat <<EOF
-
-Write these down. You'll need them to connect!
-
-Setup VPN Clients: https://git.io/vpnclients
-
-================================================
-
-EOF
-
 # Load IPsec NETKEY kernel module
 modprobe af_key
 
